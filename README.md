@@ -4,6 +4,9 @@ Overengineered is a policy-aware, observable, multi-runtime doctrinal delivery p
 
 It is also a one-page website.
 
+**Live site:** https://smallest-honest-thing.vercel.app  
+**Repository:** https://github.com/jpollard-github/overengineered
+
 ![Overengineered public site](docs/assets/overengineered-home.png)
 
 It provides a governed path from canonical content custody through domain evaluation, REST serialization, GraphQL translation, server rendering, telemetry, and eventual human comprehension. Select a route according to your conceptual role:
@@ -45,3 +48,5 @@ Only `apps/web` is deployed. The API, gateway, worker, docs application, and inf
 ## Rationale
 
 The documentation begins with platform capability because prematurely stating the simple product objective would collapse optionality before readers have selected a governed navigation path.
+
+- [Original Codex build prompt](./docs/product/history/overengineered-codex-prompt.md)

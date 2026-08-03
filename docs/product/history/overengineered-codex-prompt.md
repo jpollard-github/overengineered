@@ -1,3 +1,18 @@
+# Original Codex Build Prompt
+
+This prompt was used to generate the initial Overengineered repository.
+
+It is preserved as a historical record of the project’s original intent,
+architectural constraints, and deliberate excess.
+
+The implemented repository may differ from this prompt where tooling,
+compatibility, or judgment required adjustment.
+
+## Rationale
+
+The prompt is retained because the gap between the requested architecture
+and the final implementation is part of the project’s meaning.
+
 # Codex Prompt: Build the Most Ridiculously Overengineered One-Page Site Possible
 
 You are working inside an **empty folder named `Overengineered`**.
