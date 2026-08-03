@@ -30,7 +30,7 @@ jobs:
       - uses: actions/attest-build-provenance@v2
         if: inputs.publish == 'true'
         with: { subject-path: sbom.json }
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         if: inputs.publish == 'true'
         with: { files: sbom.json, generate_release_notes: true }
       - name: npm publishing remains disabled by default
