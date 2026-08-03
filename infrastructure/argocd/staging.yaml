@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: { name: doctrine-staging, namespace: argocd }
+spec:
+  project: default
+  source:
+    {
+      repoURL: https://github.com/example/overengineered.git,
+      targetRevision: staging,
+      path: infrastructure/kustomize/overlays/staging,
+    }
+  destination: { server: https://kubernetes.default.svc, namespace: doctrine-staging }

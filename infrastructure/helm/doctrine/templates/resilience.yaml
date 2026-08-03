@@ -1,0 +1,32 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata: { name: doctrine-web }
+spec:
+  minAvailable: 1
+  selector: { matchLabels: { app: doctrine-web } }
+{{- if .Values.autoscaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: { name: doctrine-web }
+spec:
+  scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: doctrine-web }
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }} }
+{{- end }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: doctrine-web }
+spec:
+  podSelector: { matchLabels: { app: doctrine-web } }
+  policyTypes: [Ingress, Egress]
+  ingress: [{ ports: [{ protocol: TCP, port: 3000 }] }]
+  egress:
+    - to: [{ namespaceSelector: {} }]
+      ports: [{ protocol: TCP, port: 4000 }, { protocol: TCP, port: 53 }, { protocol: UDP, port: 53 }]

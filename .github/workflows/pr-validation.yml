@@ -1,0 +1,118 @@
+name: PR validation
+on: [pull_request]
+permissions: { contents: read, security-events: write }
+jobs:
+  workspace-discovery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm doctrine
+      - run: pnpm nx show projects
+      - run: pnpm turbo run build --dry=json > turbo-plan.json
+  source-assurance:
+    needs: workspace-discovery
+    runs-on: ubuntu-latest
+    strategy:
+      {
+        fail-fast: false,
+        matrix:
+          {
+            check:
+              [
+                format:check,
+                lint,
+                typecheck,
+                test:unit,
+                test:contracts,
+                docs:governance,
+                purpose:check,
+                tokens:validate,
+              ],
+          },
+      }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm ${{ matrix.check }}
+  runtime-assurance:
+    needs: workspace-discovery
+    runs-on: ubuntu-latest
+    strategy:
+      {
+        fail-fast: false,
+        matrix: { check: [test:integration, build, docs:build, storybook:build] },
+      }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm ${{ matrix.check }}
+  browser-assurance:
+    needs: runtime-assurance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - run: pnpm exec lhci autorun
+  repository-assurance:
+    runs-on: ubuntu-latest
+    strategy:
+      {
+        fail-fast: false,
+        matrix:
+          {
+            check:
+              [
+                "cspell .",
+                "knip",
+                "nx graph --file=graph.json",
+                "license-checker-rseidelsohn --production --json",
+                "pnpm audit --prod",
+                "pnpm exec madge --circular packages apps",
+              ],
+          },
+      }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm exec ${{ matrix.check }}
+  security-supply-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+      - name: Generate SBOM
+        run: pnpm exec cyclonedx-npm --output-file sbom.json --ignore-npm-errors
+      - name: Build containers
+        run: docker compose build web gateway api worker docs
+      - name: Container vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with: { scan-type: fs, scan-ref: . }
+  infrastructure-assurance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: terraform -chdir=infrastructure/terraform fmt -check -recursive
+      - run: terraform -chdir=infrastructure/terraform init -backend=false && terraform -chdir=infrastructure/terraform validate
+      - run: helm lint infrastructure/helm/doctrine
+      - run: kubectl kustomize infrastructure/kustomize/overlays/local >/dev/null
+      - name: Policy-as-code validation
+        run: test -f infrastructure/policies/threat-model.md
+  evidence:
+    needs:
+      [
+        source-assurance,
+        runtime-assurance,
+        repository-assurance,
+        security-supply-chain,
+        infrastructure-assurance,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - uses: ./.github/actions/evidence-package

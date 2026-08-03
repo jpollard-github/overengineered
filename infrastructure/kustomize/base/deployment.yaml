@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: doctrine-web }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: doctrine-web } }
+  template:
+    metadata: { labels: { app: doctrine-web } }
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/example/overengineered-web:latest
+          ports: [{ containerPort: 3000 }]
+          envFrom: [{ configMapRef: { name: doctrine-config } }]

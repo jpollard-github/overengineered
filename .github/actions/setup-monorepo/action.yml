@@ -1,0 +1,11 @@
+name: Setup doctrinal workspace
+description: Install Node, pnpm, dependencies, and prepare overlapping caches.
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v4
+      with: { version: 11.17.0 }
+    - uses: actions/setup-node@v4
+      with: { node-version: 24, cache: pnpm }
+    - shell: bash
+      run: pnpm install --frozen-lockfile

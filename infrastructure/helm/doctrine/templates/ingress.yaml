@@ -1,0 +1,15 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: { name: doctrine-web }
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  tls: [{ hosts: [{{ .Values.ingress.host | quote }}], secretName: {{ .Values.ingress.tlsSecret }} }]
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: doctrine-web, port: { number: 3000 } } }
+{{- end }}

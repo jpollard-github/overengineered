@@ -1,0 +1,29 @@
+name: Nightly assurance
+on:
+  schedule: [{ cron: "17 3 * * *" }]
+  workflow_dispatch:
+jobs:
+  full-suite:
+    uses: ./.github/workflows/reusable-validation.yml
+  semantic-complacency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm exec stryker run
+      - run: pnpm audit
+  image-and-archaeology:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: docker compose build
+      - run: pnpm purpose:check
+      - name: Flaky test detection scaffold
+        run: for i in 1 2 3; do pnpm test:unit; done
+  confirm-purpose-remains-theoretical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm doctrine | grep "approved parody thresholds"

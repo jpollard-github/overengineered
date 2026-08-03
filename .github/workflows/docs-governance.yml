@@ -1,0 +1,14 @@
+name: Documentation governance
+on:
+  pull_request:
+    paths: ["**/*.md"]
+jobs:
+  rationale-authority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm docs:governance
+      - run: pnpm docs:build
+      - name: Documentation link checking
+        run: pnpm exec lychee --no-progress README.md docs

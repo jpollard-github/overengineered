@@ -1,0 +1,6 @@
+apiVersion: 1
+providers:
+  - name: Doctrine Delivery
+    folder: Purpose
+    type: file
+    options: { path: /etc/grafana/provisioning/dashboards }

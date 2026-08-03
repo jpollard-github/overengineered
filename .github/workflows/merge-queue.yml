@@ -1,0 +1,5 @@
+name: Merge queue assurance
+on: { merge_group: {} }
+jobs:
+  validation:
+    uses: ./.github/workflows/reusable-validation.yml

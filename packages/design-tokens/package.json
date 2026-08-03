@@ -1,0 +1,22 @@
+{
+  "name": "@overengineered/design-tokens",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens.css": "./src/tokens.css"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint src",
+    "validate": "tsx src/validate.ts"
+  },
+  "devDependencies": {
+    "tsup": "catalog:",
+    "tsx": "latest",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

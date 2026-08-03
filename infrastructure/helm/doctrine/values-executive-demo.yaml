@@ -1,0 +1,3 @@
+replicaCount: 5
+ingress: { enabled: true, host: doctrine.executive-demo.example.com }
+autoscaling: { enabled: true, minReplicas: 5, maxReplicas: 20, targetCPUUtilizationPercentage: 40 }

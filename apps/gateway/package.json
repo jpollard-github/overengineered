@@ -1,0 +1,29 @@
+{
+  "name": "@overengineered/gateway",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --import tsx src/server.ts",
+    "build": "tsup src/server.ts --format esm --out-dir dist --no-splitting",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@overengineered/contracts": "workspace:*",
+    "@overengineered/observability": "workspace:*",
+    "@overengineered/policy-engine": "workspace:*",
+    "@overengineered/runtime-config": "workspace:*",
+    "graphql": "latest",
+    "graphql-yoga": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsup": "catalog:",
+    "tsx": "latest",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

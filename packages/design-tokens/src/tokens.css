@@ -1,0 +1,18 @@
+:root {
+  --color-ink: #17201c;
+  --color-paper: #f3f1ea;
+  --color-surface: #faf9f5;
+  --color-accent: #315d4c;
+  --color-accent-soft: #dfe8e2;
+  --color-muted: #5d6762;
+  --color-line: #ccd1ca;
+  --space-xs: 0.5rem;
+  --space-sm: 0.875rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --radius-sm: 0.4rem;
+  --radius-md: 0.8rem;
+  --radius-pill: 999px;
+  --motion-fast: 140ms;
+}

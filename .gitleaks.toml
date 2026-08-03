@@ -1,0 +1,4 @@
+title = "Doctrine platform secret scanning"
+[allowlist]
+description = "Allow documented placeholder domains"
+regexes = ['example\.com']

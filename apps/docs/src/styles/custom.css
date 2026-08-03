@@ -1,0 +1,12 @@
+:root {
+  --sl-color-accent-low: #dfe8e2;
+  --sl-color-accent: #315d4c;
+  --sl-color-accent-high: #173329;
+  --sl-color-bg: #f7f5ef;
+  --sl-color-text: #17201c;
+  --sl-font: Inter, ui-sans-serif, sans-serif;
+}
+.hero h1 {
+  font-family: Georgia, serif;
+  letter-spacing: -0.04em;
+}

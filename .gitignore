@@ -1,0 +1,17 @@
+node_modules
+.pnpm-store
+.pnpm-cache
+.pnpm-state
+.next
+dist
+coverage
+.turbo
+.nx
+.astro
+storybook-static
+playwright-report
+test-results
+.env
+!.env.example
+*.tsbuildinfo
+.DS_Store

@@ -1,0 +1,27 @@
+{
+  "name": "@overengineered/worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --import tsx src/index.ts",
+    "build": "tsup src/index.ts --format esm --out-dir dist --no-splitting",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@overengineered/contracts": "workspace:*",
+    "@overengineered/event-bus": "workspace:*",
+    "@overengineered/observability": "workspace:*",
+    "@overengineered/runtime-config": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsup": "catalog:",
+    "tsx": "latest",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

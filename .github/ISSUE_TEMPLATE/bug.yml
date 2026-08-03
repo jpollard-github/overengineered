@@ -1,0 +1,14 @@
+name: Visible failure report
+description: Report observable behavior before proposing architecture.
+body:
+  - type: textarea
+    id: failure
+    attributes: { label: What visibly failed? }
+    validations: { required: true }
+  - type: textarea
+    id: artifact
+    attributes: { label: Which actual artifact was inspected? }
+    validations: { required: true }
+  - type: textarea
+    id: smallest
+    attributes: { label: What is the smallest complete remedy? }

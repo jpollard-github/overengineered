@@ -1,0 +1,17 @@
+name: Canary sentence delivery
+on:
+  {
+    workflow_dispatch:
+      { inputs: { weight: { description: Traffic percentage, default: "5", required: true } } },
+  }
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    environment: canary
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm ci:local
+      - run: helm template doctrine infrastructure/helm/doctrine --set canary.enabled=true --set canary.weight=${{ inputs.weight }} > canary.yaml
+      - name: Promotion intentionally guarded
+        run: echo "Validated canary manifest; deployment requires explicit cluster credentials."

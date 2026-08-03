@@ -1,0 +1,2 @@
+replicaCount: 1
+ingress: { enabled: true, host: doctrine.dev.example.com }

@@ -1,0 +1,32 @@
+{
+  "name": "@overengineered/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "NEXT_TELEMETRY_DISABLED=1 next dev --port 3000",
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "start": "NEXT_TELEMETRY_DISABLED=1 next start --port 3000",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint app"
+  },
+  "dependencies": {
+    "@overengineered/analytics": "workspace:*",
+    "@overengineered/build-metadata": "workspace:*",
+    "@overengineered/content": "workspace:*",
+    "@overengineered/contracts": "workspace:*",
+    "@overengineered/design-tokens": "workspace:*",
+    "@overengineered/one-line-copy": "workspace:*",
+    "@overengineered/ui": "workspace:*",
+    "next": "latest",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

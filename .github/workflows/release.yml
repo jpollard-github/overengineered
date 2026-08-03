@@ -1,0 +1,41 @@
+name: Release
+on:
+  {
+    workflow_dispatch:
+      {
+        inputs:
+          {
+            publish:
+              {
+                description: Publish packages and images,
+                required: true,
+                default: "false",
+                type: choice,
+                options: ["false", "true"],
+              },
+          },
+      },
+  }
+permissions: { contents: write, packages: write, id-token: write, attestations: write }
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-monorepo
+      - run: pnpm changeset version
+      - run: pnpm build
+      - run: docker compose build
+      - run: pnpm exec cyclonedx-npm --output-file sbom.json --ignore-npm-errors
+      - uses: actions/attest-build-provenance@v2
+        if: inputs.publish == 'true'
+        with: { subject-path: sbom.json }
+      - uses: softprops/action-gh-release@v2
+        if: inputs.publish == 'true'
+        with: { files: sbom.json, generate_release_notes: true }
+      - name: npm publishing remains disabled by default
+        if: inputs.publish == 'true'
+        run: echo "Publishing requires an additional repository-level policy decision."
+      - name: Environment promotion placeholder
+        if: inputs.publish == 'true'
+        run: echo "Argo CD promotion reference would be updated here."

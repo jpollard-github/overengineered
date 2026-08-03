@@ -1,0 +1,2 @@
+replicaCount: 2
+ingress: { enabled: true, host: doctrine.staging.example.com }

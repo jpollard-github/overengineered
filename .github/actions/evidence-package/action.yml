@@ -1,0 +1,9 @@
+name: Package evidence
+description: Preserve purpose, build, test, and graph evidence.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: mkdir -p evidence && pnpm doctrine > evidence/complexity.txt && pnpm purpose:check > evidence/purpose.txt
+    - uses: actions/upload-artifact@v4
+      with: { name: doctrinal-evidence, path: evidence }
