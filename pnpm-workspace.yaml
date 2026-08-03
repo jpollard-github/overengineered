@@ -8,8 +8,8 @@ allowBuilds:
   nx: true
   sharp: true
 catalog:
-  typescript: ^5.9.2
-  zod: ^4.0.17
+  typescript: ^7.0.2
+  zod: ^4.4.3
   react: ^19.1.1
   react-dom: ^19.1.1
   tsup: ^8.5.0
