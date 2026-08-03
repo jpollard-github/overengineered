@@ -27,7 +27,7 @@ jobs:
       - run: pnpm build
       - run: docker compose build
       - run: pnpm exec cyclonedx-npm --output-file sbom.json --ignore-npm-errors
-      - uses: actions/attest-build-provenance@v2
+      - uses: actions/attest-build-provenance@v4
         if: inputs.publish == 'true'
         with: { subject-path: sbom.json }
       - uses: softprops/action-gh-release@v2
