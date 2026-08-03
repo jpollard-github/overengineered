@@ -6,6 +6,10 @@ export async function getDoctrine(): Promise<{
   doctrine: Doctrine;
   source: "gateway" | "local-continuity";
 }> {
+  if (process.env.DOCTRINE_SOURCE === "local") {
+    return { doctrine: localDoctrine, source: "local-continuity" };
+  }
+
   const url =
     process.env.GATEWAY_URL ??
     process.env.NEXT_PUBLIC_GATEWAY_URL ??

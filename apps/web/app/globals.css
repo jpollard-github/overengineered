@@ -54,6 +54,11 @@ summary:focus-visible {
   font-weight: 800;
   letter-spacing: -0.06em;
 }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 .site-header nav {
   display: flex;
   gap: 1.5rem;
@@ -65,6 +70,27 @@ summary:focus-visible {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+.github-link {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  border-radius: 50%;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+.github-link:hover {
+  color: var(--color-ink);
+  background: rgba(30, 35, 33, 0.05);
+}
+.github-link svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
 }
 main {
   overflow: hidden;

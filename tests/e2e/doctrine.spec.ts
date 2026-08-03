@@ -7,6 +7,14 @@ test("page loads all doctrine and build details", async ({ page }) => {
   ).toBeVisible();
   await expect(page.locator(".principle-card")).toHaveCount(11);
   await expect(page.getByText("User-visible pages")).toBeVisible();
+  const githubLink = page.getByRole("link", { name: "View Overengineered on GitHub" });
+  await expect(githubLink).toBeVisible();
+  await expect(githubLink).toHaveAttribute(
+    "href",
+    "https://github.com/jpollard-github/overengineered",
+  );
+  await expect(githubLink).toHaveAttribute("target", "_blank");
+  await expect(githubLink).toHaveAttribute("rel", "noreferrer noopener");
   await page.getByText("Build information").click();
   await expect(page.getByText("Content route")).toBeVisible();
 });
@@ -27,6 +35,8 @@ test("mobile has no horizontal overflow and keyboard reaches content", async ({ 
       () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
     ),
   ).toBe(true);
+  await expect(page.getByRole("navigation", { name: "On this page" })).toBeHidden();
+  await expect(page.getByRole("link", { name: "View Overengineered on GitHub" })).toBeVisible();
   await page.keyboard.press("Tab");
   await expect(page.locator(".skip-link")).toBeFocused();
 });
