@@ -8,14 +8,14 @@ jobs:
   semantic-complacency:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm exec stryker run
       - run: pnpm audit
   image-and-archaeology:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: docker compose build
       - run: pnpm purpose:check
@@ -24,6 +24,6 @@ jobs:
   confirm-purpose-remains-theoretical:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm doctrine | grep "approved parody thresholds"
