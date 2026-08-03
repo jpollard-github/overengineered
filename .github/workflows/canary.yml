@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: canary
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm ci:local
       - run: helm template doctrine infrastructure/helm/doctrine --set canary.enabled=true --set canary.weight=${{ inputs.weight }} > canary.yaml

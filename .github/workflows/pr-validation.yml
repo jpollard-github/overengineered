@@ -5,7 +5,7 @@ jobs:
   workspace-discovery:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm doctrine
       - run: pnpm nx show projects
@@ -32,7 +32,7 @@ jobs:
           },
       }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm ${{ matrix.check }}
   runtime-assurance:
@@ -44,14 +44,14 @@ jobs:
         matrix: { check: [test:integration, build, docs:build, storybook:build] },
       }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm ${{ matrix.check }}
   browser-assurance:
     needs: runtime-assurance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
@@ -75,13 +75,13 @@ jobs:
           },
       }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - run: pnpm exec ${{ matrix.check }}
   security-supply-chain:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - name: Secret scan
         uses: gitleaks/gitleaks-action@v2
@@ -95,7 +95,7 @@ jobs:
   infrastructure-assurance:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: terraform -chdir=infrastructure/terraform fmt -check -recursive
       - run: terraform -chdir=infrastructure/terraform init -backend=false && terraform -chdir=infrastructure/terraform validate
       - run: helm lint infrastructure/helm/doctrine
@@ -113,6 +113,6 @@ jobs:
       ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-monorepo
       - uses: ./.github/actions/evidence-package
