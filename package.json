@@ -71,7 +71,7 @@
     "storybook": "latest",
     "tsx": "latest",
     "turbo": "latest",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "typescript-eslint": "latest",
     "vitest": "latest"
   },
